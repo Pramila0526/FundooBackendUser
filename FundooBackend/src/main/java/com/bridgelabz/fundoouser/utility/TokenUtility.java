@@ -3,10 +3,10 @@ import java.util.Date;
 import org.springframework.stereotype.Component;
 import com.bridgelabz.fundoouser.exception.TokenException;
 import com.bridgelabz.fundoouser.message.Messages;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
 /**********************************************************************************************************
  * @author :Pramila Tawari 
  * Purpose :Class For Generating the Token

@@ -1,6 +1,7 @@
 package com.bridgelabz.fundoouser.message;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
+
 /**********************************************************************************************************
  * @author 	:Pramila Tawari 
  * Purpose	:Models a simple mail message, including data such as the from, to, cc, subject,

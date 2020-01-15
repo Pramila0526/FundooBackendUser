@@ -1,4 +1,5 @@
 package com.bridgelabz.fundoouser.exception;
+
 /**********************************************************************************************************
  * @author :Pramila Tawari 
  * Purpose :Defining Method Exception in Token Generation

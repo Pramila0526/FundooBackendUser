@@ -1,5 +1,6 @@
 package com.bridgelabz.fundoouser.dto;
 import javax.validation.constraints.Pattern;
+
 /**********************************************************************************************************
  * @author 	:Pramila Tawari 
  * Purpose	:Login Credentials

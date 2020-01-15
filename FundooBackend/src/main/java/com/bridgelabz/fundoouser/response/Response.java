@@ -5,6 +5,7 @@ import java.io.Serializable;
  * Purpose :Sending response to postman
  *
  *********************************************************************************************************/
+
 public class Response implements Serializable
 {
 	private static final long serialVersionUID = 1L;

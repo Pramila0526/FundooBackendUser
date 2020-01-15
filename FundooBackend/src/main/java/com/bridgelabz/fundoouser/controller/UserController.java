@@ -35,7 +35,7 @@ public class UserController
     	  return "Hello User!!";
       }
       
-     // API for registering the user into the database. 
+    // API for registering the user into the database. 
 	@PostMapping("/register")
 	public ResponseEntity<Response> Register(@RequestBody RegistrationDto regDto)
 	{
@@ -70,5 +70,19 @@ public class UserController
 			@RequestBody ResetPasswordDto setpassworddto) {
 		System.out.println("in controller");
 		return new ResponseEntity<Response>(userServiceImp.setPassword(setpassworddto, token), HttpStatus.OK);
+	}
+	
+	// API for finding a particular user
+	@GetMapping("/finduser")
+	public ResponseEntity<Response> findUser(@RequestBody String email, @RequestParam String token) {
+
+		return new ResponseEntity<Response>(userServiceImp.findUser(token), HttpStatus.OK);
+	}
+	
+	// API to show all Users
+	@GetMapping("/showallusers")
+	public Response showAllUsers(@RequestParam String token) {
+
+		return new Response(200, "All User's Details", userServiceImp.showAllUsers(token));
 	}
 }

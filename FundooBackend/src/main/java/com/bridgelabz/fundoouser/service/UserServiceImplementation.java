@@ -1,4 +1,5 @@
 package com.bridgelabz.fundoouser.service;
+import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -21,7 +22,8 @@ import com.bridgelabz.fundoouser.response.Response;
 import com.bridgelabz.fundoouser.utility.TokenUtility;
 
 /**********************************************************************************************************
- * @author :Pramila Tawari Purpose :Service Implementation Class for
+ * @author :Pramila Tawari 
+ * Purpose :Service Implementation Class for
  *         implementing actual Flow/Logic
  *
  *********************************************************************************************************/
@@ -166,7 +168,7 @@ public class UserServiceImplementation implements UserService {
 	}
 	
 	/**
-	 * @return Set Passwrod Method :-
+	 * @return Set Password Method :-
 	 * 			Changing the Password 
 	 *
 	 */
@@ -180,9 +182,32 @@ public class UserServiceImplementation implements UserService {
 			updateUser.setPassword(passwordEncoder.encode(setPasswordDto.getPassword())); // new password encode it
 
 			updateUserByEmail(updateUser, useremail);
-			return new Response(200, "change password", Messages.PASSWORD_CHANGED_SUCCESSFULLY);
+			return new Response(200, "Changed password", Messages.PASSWORD_CHANGED_SUCCESSFULLY);
 		} else {
-			return new Response(400, "change password", Messages.PASSWORD_NOT_MATCHING);
+			return new Response(400, "Error In Changing The Password", Messages.PASSWORD_NOT_MATCHING);
 		}
+	}
+	
+	/**
+	 * @return Find User :-
+	 * 		   Particular user's data by the token
+	 *
+	 */
+	public Response findUser(String token) {
+		String email = tokenutility.getUserToken(token);
+		if (email.isEmpty()) {
+			throw new TokenException(Messages.INVALID_TOKEN);
+		}
+		return new Response(200, "User Registrtion ", repository.findByEmail(email));
+	}
+	
+	/**
+	 * @return Show All Users Method :-
+	 * 			Showing the users's List
+	 *
+	 */
+	public List<User> showAllUsers(String token) {
+		System.out.println("check");
+		return repository.findAll(); // show all user details in JPA
 	}
 }

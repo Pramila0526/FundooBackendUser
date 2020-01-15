@@ -11,8 +11,8 @@ import com.bridgelabz.fundoouser.model.User;
  *********************************************************************************************************/
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Object /*String*/> 
+public interface UserRepository extends JpaRepository<User, Object> 
 {
-	// For finding or recovring the user account by MailId
+	// For finding or recovering the user account by MailId
 	User findByEmail(String email);
 }
