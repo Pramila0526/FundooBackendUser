@@ -61,14 +61,15 @@ public class UserController
 	
 	// API for Login the user from Database.
 	@PostMapping("/login")
-	public ResponseEntity<Response> loginUser(@RequestBody LoginDto logindto) {
-
+	public ResponseEntity<Response> loginUser(@RequestBody LoginDto logindto)
+	{
 		return new ResponseEntity<Response>(userServiceImp.loginUser(logindto), HttpStatus.OK);
 	}
 	
 	// API for recovering in case of forgotton password 
 	@PostMapping("/forgotpassword")
-	public String findEmail(@RequestBody  ForgotPasswordDto forgetPasswordDto) {
+	public String findEmail(@RequestBody  ForgotPasswordDto forgetPasswordDto) 
+	{
 
 		userServiceImp.forgotPassword(forgetPasswordDto);
 		return Messages.MAIL_SENT;
@@ -77,22 +78,23 @@ public class UserController
 	// API for setting new Password
 	@PostMapping("/setpassword")
 	public ResponseEntity<Response> setNewPassword(@RequestParam String token,
-			@RequestBody ResetPasswordDto setpassworddto) {
+			@RequestBody ResetPasswordDto setpassworddto) 
+	{
 		System.out.println("in controller");
 		return new ResponseEntity<Response>(userServiceImp.setPassword(setpassworddto, token), HttpStatus.OK);
 	}
 	
 	// API for finding a particular user
 	@GetMapping("/finduser")
-	public ResponseEntity<Response> findUser(@RequestBody String email, @RequestParam String token) {
-
+	public ResponseEntity<Response> findUser(@RequestBody String email, @RequestHeader String token) 
+	{
 		return new ResponseEntity<Response>(userServiceImp.findUser(token), HttpStatus.OK);
 	}
 	
 	// API to show all Users
 	@GetMapping("/showallusers")
-	public Response showAllUsers(@RequestParam String token) {
-
+	public Response showAllUsers(@RequestParam String token) 
+	{
 		return new Response(Messages.OK,null,userServiceImp.showAllUsers(token));
 	}
 }
