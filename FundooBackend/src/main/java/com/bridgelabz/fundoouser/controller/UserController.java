@@ -1,10 +1,12 @@
 package com.bridgelabz.fundoouser.controller;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.bridgelabz.fundoouser.dto.ForgotPasswordDto;
@@ -37,14 +39,14 @@ public class UserController
       
     // API for registering the user into the database. 
 	@PostMapping("/register")
-	public ResponseEntity<Response> Register(@RequestBody RegistrationDto regDto)
+	public ResponseEntity<Response> Register(@Valid @RequestBody RegistrationDto regDto)
 	{
 		return new ResponseEntity<Response>(userServiceImp.Register(regDto), HttpStatus.OK); // give response for user 200
 	}
 	
 	// API for validating the user into the database. 
 	@PostMapping("/validate")
-	public ResponseEntity<Response> validate(@RequestParam String token) 
+	public ResponseEntity<Response> validate(@Valid @RequestParam String token) 
 	{
 		return new ResponseEntity<Response>(userServiceImp.validateUser(token), HttpStatus.OK);
 	}
@@ -83,6 +85,6 @@ public class UserController
 	@GetMapping("/showallusers")
 	public Response showAllUsers(@RequestParam String token) {
 
-		return new Response(200, "All User's Details", userServiceImp.showAllUsers(token));
+		return new Response(Messages.OK,null,userServiceImp.showAllUsers(token));
 	}
 }

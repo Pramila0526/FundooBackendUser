@@ -1,17 +1,12 @@
 package com.bridgelabz.fundoouser.response;
-import java.io.Serializable;
-/**********************************************************************************************************
- * @author :Pramila Tawari 
- * Purpose :Sending response to postman
- *
- *********************************************************************************************************/
 
-public class Response implements Serializable
-{
-	private static final long serialVersionUID = 1L;
+import java.io.Serializable;
+
+public class Response implements Serializable{
+private static final long serialVersionUID = 1L;
 	
-	private int status;          
-	private String message;     
+	private String status;  
+	private String message;
 	private Object data;
 
 	public Response()
@@ -19,27 +14,19 @@ public class Response implements Serializable
 		
 	}
 	
-	public Response(int status, String message, Object data) {
+	public Response(String status,String message, Object data) {
 		super();
 		this.status = status;
-		this.message = message;
+		this.message=message;
 		this.data = data;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
 	}
 
 	public Object getData() {
@@ -51,6 +38,6 @@ public class Response implements Serializable
 	}
 
 	public String toString() {
-		return "Response [status=" + status + ", message=" + message + ", data=" + data + "]";
+		return "Response [status=" + status + " data=" + data + "]";
 	} 
 }

@@ -1,6 +1,9 @@
 package com.bridgelabz.fundoouser.service;
+
 import java.util.List;
+import org.hibernate.validator.internal.util.logging.LoggerFactory;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,8 +25,7 @@ import com.bridgelabz.fundoouser.response.Response;
 import com.bridgelabz.fundoouser.utility.TokenUtility;
 
 /**********************************************************************************************************
- * @author :Pramila Tawari 
- * Purpose :Service Implementation Class for
+ * @author :Pramila Tawari Purpose :Service Implementation Class for
  *         implementing actual Flow/Logic
  *
  *********************************************************************************************************/
@@ -52,6 +54,8 @@ public class UserServiceImplementation implements UserService {
 	@Autowired
 	private PasswordConfiguration passConfig;
 
+//	static Logger logger = Logger.getLogger(UserServiceImplementation.class);
+
 	/**
 	 * @return User Registration Mathod :- After the User Registration, OTP/ Token
 	 *         in been sent to Users Mail For Verification Using JMS(Java Mail
@@ -64,23 +68,24 @@ public class UserServiceImplementation implements UserService {
 		System.out.println(user.getFirstname());
 		if (repository.findAll().stream().anyMatch(i -> i.getEmail().equals(regdto.getEmail()))) // check user already
 		{
-			throw new RegistrationExcepton(Messages.EMAIL_ALREADY_REGISTERED);
+			return new Response(Messages.BAD_REQUEST, "User Registration Completed ", Messages.EMAIL_ALREADY_REGISTERED);
+		}  
+			user.setPassword(passwordEncoder.encode(regdto.getPassword()));
+			System.out.println(user);
+			user = repository.save(user); // Storing Users Data in Database
+      			
+			if (user == null) {
+				throw new RegistrationExcepton(Messages.ENTER_EMAIL);
+			}
+			String token = tokenutility.createToken(user.getEmail());
+			System.out.println(token);
+		
+			javaMailSender
+					.send(MessageUtility.verifyUserMail(regdto.getEmail(), token, Messages.REGISTRATION_MAIL_TEXT));
+
+			return new Response(Messages.OK, null, Messages.USER_ADDED_SUCCESSFULLY);
 		}
-		user.setPassword(passwordEncoder.encode(regdto.getPassword()));
-		System.out.println(user);
-		user = repository.save(user); // Storing Users Data in Database
-		if (user == null) {
-			throw new RegistrationExcepton(Messages.INVALID_EMAIL);
-		}
-
-		String token = tokenutility.createToken(user.getEmail());
-		System.out.println(token);
-
-		javaMailSender.send(MessageUtility.verifyUserMail(regdto.getEmail(), token, Messages.REGISTRATION_MAIL_TEXT));
-
-		return new Response(200, "User Registration Completed ", Messages.USER_ADDED_SUCCESSFULLY);
-	}
-
+	
 	/**
 	 * @return Validating the User :- It Checks if the Token is from valid mail Id
 	 *         or Not. If token is valid, it sets the validation as 1.
@@ -90,29 +95,29 @@ public class UserServiceImplementation implements UserService {
 
 		String email = tokenutility.getUserToken(token); // get user id from user token.
 		if (email.isEmpty()) {
-			throw new TokenException(Messages.INVALID_TOKEN);
+			throw new TokenException(Messages.INVALID_EMAIL);
 		}
 
 		User user = repository.findByEmail(email);
 		if (user != null) { // if userid is found validate should be true
 			user.setValidate(true);
 			repository.save(user);
-			return new Response(200, "email  ", Messages.EMAIL_VERFIY);
+			return new Response(Messages.OK, "email  ", Messages.EMAIL_VERIFIED);
 		} else {
-			return new Response(200, "Email Not Verified", Messages.NOT_VERFIY_EMAIL);
+			return new Response(Messages.BAD_REQUEST, "Email Not Verified", Messages.NOT_VERFIY_EMAIL);
 		}
 	}
 
 	/**
-	 * @return User Login Method :- 
-	 * 			Login the Authenticated User
+	 * @return User Login Method :- Login the Authenticated User
 	 *
 	 */
+	
 	public Response loginUser(LoginDto logindto) {
 		User user = repository.findByEmail(logindto.getEmail()); // find email present or not
 		System.out.println(user);
 		if (user == null) {
-			return new Response(200, "User Registrtion ", Messages.INVALID_EMAIL);
+			return new Response(Messages.BAD_REQUEST, "User Registrtion ", Messages.USER_NOT_EXISTING);
 
 		}
 		String token = tokenutility.createToken(user.getEmail());
@@ -123,16 +128,14 @@ public class UserServiceImplementation implements UserService {
 		} else {
 			if (user.getEmail().equals(logindto.getEmail())
 					&& passConfig.encoder().matches(logindto.getPassword(), user.getPassword())) { // encode the user
-				return new Response(200, Messages.LOGIN_SUCCESSFUL, token); // password
+				return new Response(Messages.OK, Messages.LOGIN_SUCCESSFUL, token); // password
 			}
 		}
-		return new Response(200, "User Registrtion ", Messages.LOGIN_UNSUCCESSFUL);
+		return new Response(Messages.BAD_REQUEST, "User Registrtion ", Messages.LOGIN_UNSUCCESSFUL);
 	}
-
 	/**
-	 * @return Forgot Passwrod Method :-
-	 * 			In Case if Password is not remebering then we can 
-	 * 			recover it by sending token to the email id.
+	 * @return Forgot Passwrod Method :- In Case if Password is not remebering then
+	 *         we can recover it by sending token to the email id.
 	 *
 	 */
 	public Response forgotPassword(ForgotPasswordDto forgetPasswordDto) {
@@ -147,16 +150,15 @@ public class UserServiceImplementation implements UserService {
 			String token = tokenutility.createToken(user.getEmail());
 			System.out.println(token);
 
-			javaMailSender.send(
-					MessageUtility.verifyUserMail(forgetPasswordDto.getEmail(), token, Messages.VERIFY_MAIL)); // send
-																													// email
+			javaMailSender
+					.send(MessageUtility.verifyUserMail(forgetPasswordDto.getEmail(), token, Messages.VERIFY_MAIL)); // send
+																														// email
 		}
-		return new Response(400, "user", "user  email found");
+		return new Response(Messages.OK, null, Messages.EMAIL_VERIFIED);
 	}
 
 	/**
-	 * @return Update User Method :-
-	 * 			Updating the user account by new Information
+	 * @return Update User Method :- Updating the user account by new Information
 	 *
 	 */
 	public String updateUserByEmail(User user, String email) {
@@ -166,10 +168,9 @@ public class UserServiceImplementation implements UserService {
 		repository.save(updateUser);
 		return Messages.USER_UPDATE_SUCCESSFULLY;
 	}
-	
+
 	/**
-	 * @return Set Password Method :-
-	 * 			Changing the Password 
+	 * @return Set Password Method :- Changing the Password
 	 *
 	 */
 	public Response setPassword(ResetPasswordDto setPasswordDto, String token) {
@@ -182,15 +183,14 @@ public class UserServiceImplementation implements UserService {
 			updateUser.setPassword(passwordEncoder.encode(setPasswordDto.getPassword())); // new password encode it
 
 			updateUserByEmail(updateUser, useremail);
-			return new Response(200, "Changed password", Messages.PASSWORD_CHANGED_SUCCESSFULLY);
+			return new Response(Messages.OK, "Changed password", Messages.PASSWORD_CHANGED_SUCCESSFULLY);
 		} else {
-			return new Response(400, "Error In Changing The Password", Messages.PASSWORD_NOT_MATCHING);
+			return new Response(Messages.BAD_REQUEST, null, Messages.PASSWORD_NOT_MATCHING);
 		}
 	}
-	
+
 	/**
-	 * @return Find User :-
-	 * 		   Particular user's data by the token
+	 * @return Find User :- Particular user's data by the token
 	 *
 	 */
 	public Response findUser(String token) {
@@ -198,12 +198,11 @@ public class UserServiceImplementation implements UserService {
 		if (email.isEmpty()) {
 			throw new TokenException(Messages.INVALID_TOKEN);
 		}
-		return new Response(200, "User Registrtion ", repository.findByEmail(email));
+		return new Response(Messages.OK, "User Registration ", repository.findByEmail(email));
 	}
-	
+
 	/**
-	 * @return Show All Users Method :-
-	 * 			Showing the users's List
+	 * @return Show All Users Method :- Showing the users's List
 	 *
 	 */
 	public List<User> showAllUsers(String token) {

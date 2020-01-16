@@ -1,5 +1,4 @@
 package com.bridgelabz.fundoouser.dto;
-import javax.validation.constraints.Pattern;
 
 /**********************************************************************************************************
  * @author 	:Pramila Tawari 
@@ -8,7 +7,7 @@ import javax.validation.constraints.Pattern;
  *********************************************************************************************************/
 
 public class LoginDto {
-	@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\. [A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "mail id format wrong")
+	//@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\. [A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "mail id format wrong")
 	private String email;
 
 	private String password;

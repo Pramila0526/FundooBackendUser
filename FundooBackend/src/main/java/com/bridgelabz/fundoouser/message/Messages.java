@@ -14,7 +14,9 @@ public class Messages {
 	public static final String REGISTRATION_MAIL_TEXT = "\t Validate your email \n"
 														+ "http://localhost:8080/validate?token=";
 	
-	public static final String INVALID_EMAIL = "Invalid Username*";
+	public static final String INVALID_EMAIL = "Invalid Username Or Empty Field*";
+	
+	public static final String ENTER_EMAIL = "Please Enter Mail ID*";
 	
 	public static final String LINK_NOT_ACTIVE = "Activate your account link that sent to your email id";
 	
@@ -22,7 +24,7 @@ public class Messages {
 	
 	public static final String NOT_VERFIY_EMAIL = "Please Verify Your Email";
 	
-	public static final String EMAIL_VERFIY = "Email Verification Successful!!";
+	public static final String EMAIL_VERIFIED = "Email Verification Successful!!";
 	
 	public static final String LOGIN_SUCCESSFUL = "Succesfully Logged In";
 	
@@ -42,5 +44,15 @@ public class Messages {
 	
 	public static final String INVALID_TOKEN = "Invalid Token**";
 	
-	public static final String VERIFY_MAIL= "Please Enter Valid Email";
+	public static final String VERIFY_MAIL= "Verified";
+	
+	// Status Code
+	public static final String OK = "200";
+	
+	public static final String BAD_REQUEST = "400";
+	
+	public static final String NOT_FOUND = "404";
+
+
+	
 }

@@ -1,12 +1,12 @@
 package com.bridgelabz.fundoouser.service;
 import java.util.List;
-
 import com.bridgelabz.fundoouser.dto.ForgotPasswordDto;
 import com.bridgelabz.fundoouser.dto.LoginDto;
 import com.bridgelabz.fundoouser.dto.RegistrationDto;
 import com.bridgelabz.fundoouser.dto.ResetPasswordDto;
 import com.bridgelabz.fundoouser.model.User;
 import com.bridgelabz.fundoouser.response.Response;
+
 /**********************************************************************************************************
  * @author :Pramila Tawari 
  * Purpose :Messages for identifying the Status of Implementation

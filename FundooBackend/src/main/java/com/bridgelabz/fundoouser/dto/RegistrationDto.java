@@ -1,7 +1,8 @@
 package com.bridgelabz.fundoouser.dto;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
- 
+
 /**********************************************************************************************************
  * @author :Pramila Tawari 
  * Purpose :Data For Registration
@@ -9,34 +10,34 @@ import javax.validation.constraints.Pattern;
  *********************************************************************************************************/
 
 public class RegistrationDto {
-	@NotBlank(message = "First Name is mandatory")
-	@Pattern(regexp = "^[a-zA-Z]*$")
+	@NotNull
 	private String firstname;
-
-	@NotBlank(message = "Last Name is mandatory")
-	@Pattern(regexp = "^[a-zA-Z]*$")
+	
+	@NotNull(message = "Last Name is mandatory")	
 	private String lastname;
-
-	@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\. [A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "phone format wrong")
+	
+	@NotNull
+	@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\. [A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message="phone format wrong" )
 	private String email;
 
-	@NotBlank(message = "password is mandatory")
+	@NotNull(message = "password is mandatory")
 	private String password;
+	
+	@NotNull
+	@Pattern(regexp = "(0/91)?[7-9][0-9]{9}", message="phone format wrong" )
+	private String phonenumber;
 
-	@Pattern(regexp = "(0/91)?[7-9][0-9]{9}", message = "phone format wrong")
-	@NotBlank(message = "phone is mandatory")
-	private long phonenumber;
-
-	public RegistrationDto() {
-
+	public RegistrationDto()
+	{
+		
 	}
-
+	
 	public RegistrationDto(
-			@NotBlank(message = "First Name is mandatory") @Pattern(regexp = "^[a-zA-Z]*$") String firstname,
-			@NotBlank(message = "Last Name is mandatory") @Pattern(regexp = "^[a-zA-Z]*$") String lastname,
+			@NotNull(message = "First Name is mandatory") @Pattern(regexp = "^[a-zA-Z]*$") String firstname,
+			@NotNull(message = "Last Name is mandatory") @Pattern(regexp = "^[a-zA-Z]*$") String lastname,
 			@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\. [A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "phone format wrong") String email,
-			@NotBlank(message = "password is mandatory") String password,
-			@Pattern(regexp = "(0/91)?[7-9][0-9]{9}", message = "phone format wrong") @NotBlank(message = "phone is mandatory") long phonenumber) {
+			@NotNull(message = "password is mandatory") String password,
+			@Pattern(regexp = "(0/91)?[7-9][0-9]{9}", message = "phone format wrong") @NotBlank(message = "phone is mandatory") String phonenumber) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -77,15 +78,14 @@ public class RegistrationDto {
 		this.password = password;
 	}
 
-	public long getPhonenumber() {
+	public String getPhonenumber() {
 		return phonenumber;
 	}
 
-	public void setPhonenumber(long phonenumber) {
+	public void setPhonenumber(String phonenumber) {
 		this.phonenumber = phonenumber;
 	}
 
-	@Override
 	public String toString() {
 		return "RegistrationDto [firstname=" + firstname + ", lastname=" + lastname + ", email=" + email + ", password="
 				+ password + ", phonenumber=" + phonenumber + "]";
