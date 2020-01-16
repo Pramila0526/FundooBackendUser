@@ -1,11 +1,15 @@
 package com.bridgelabz.fundoouser.response;
-
 import java.io.Serializable;
-
+/************************************************************************************************************************
+ * @author 	:Pramila Tawari
+ * Purpose 	:Response for Postman
+ *
+ *****************************************************************************************************************/
 public class Response implements Serializable{
 private static final long serialVersionUID = 1L;
 	
 	private String status;  
+	@SuppressWarnings("unused")
 	private String message;
 	private Object data;
 
