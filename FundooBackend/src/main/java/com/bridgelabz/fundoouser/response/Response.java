@@ -5,7 +5,8 @@ import java.io.Serializable;
  * Purpose 	:Response for Postman
  *
  *****************************************************************************************************************/
-public class Response implements Serializable{
+public class Response implements Serializable
+{
 private static final long serialVersionUID = 1L;
 	
 	private String status;  
@@ -18,30 +19,36 @@ private static final long serialVersionUID = 1L;
 		
 	}
 	
-	public Response(String status,String message, Object data) {
+	public Response(String status,String message, Object data)
+	{
 		super();
 		this.status = status;
 		this.message=message;
 		this.data = data;
 	}
 
-	public String getStatus() {
+	public String getStatus()
+	{
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(String status)
+	{
 		this.status = status;
 	}
 
-	public Object getData() {
+	public Object getData() 
+	{
 		return data;
 	}
 
-	public void setData(Object data) {
+	public void setData(Object data)
+	{
 		this.data = data;
 	}
 
-	public String toString() {
+	public String toString() 
+	{
 		return "Response [status=" + status + " data=" + data + "]";
 	} 
 }

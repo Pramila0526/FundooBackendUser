@@ -10,22 +10,28 @@ public class ResetPasswordDto {
 	private String password;
 	private String confirmpassword;
 	
-	public String getPassword() {
+	public String getPassword() 
+	{
 		return password;
 	}
-	public void setPassword(String password) {
+	public void setPassword(String password) 
+	{
 		this.password = password;
 	}
-	public String getConfirmpassword() {
+	public String getConfirmpassword()
+	{
 		return confirmpassword;
 	}
-	public void setConfirmpassword(String confirmpassword) {
+	public void setConfirmpassword(String confirmpassword)
+	{
 		this.confirmpassword = confirmpassword;
 	}
-	public ResetPasswordDto() {
+	public ResetPasswordDto() 
+	{
 		
 	}
-	public ResetPasswordDto(String password, String confirmpassword) {
+	public ResetPasswordDto(String password, String confirmpassword) 
+	{
 		super();
 		this.password = password;
 		this.confirmpassword = confirmpassword;

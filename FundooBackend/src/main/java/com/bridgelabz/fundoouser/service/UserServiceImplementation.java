@@ -24,7 +24,8 @@ import com.bridgelabz.fundoouser.response.Response;
 import com.bridgelabz.fundoouser.utility.TokenUtility;
 
 /**********************************************************************************************************
- * @author :Pramila Tawari Purpose :Service Implementation Class for
+ * @author :Pramila Mangesh Tawari 
+ * Purpose :Service Implementation Class for
  *         implementing actual Flow/Logic
  *
  *********************************************************************************************************/
@@ -63,10 +64,12 @@ public class UserServiceImplementation implements UserService {
 	 *         Sender).
 	 *
 	 */
-	public Response Register(RegistrationDto regdto) {
-
+	public Response Register(RegistrationDto regdto) 
+	{
 		User user = mapper.map(regdto, User.class); // Mapping new User data into the user Class
+		
 		System.out.println(user.getFirstname());
+		
 		if (repository.findAll().stream().anyMatch(i -> i.getEmail().equals(regdto.getEmail()))) // check user already
 		{
 			logger.info("Registration Completed");
@@ -76,7 +79,8 @@ public class UserServiceImplementation implements UserService {
 			System.out.println(user);
 			user = repository.save(user); // Storing Users Data in Database
       			
-			if (user == null) {
+			if (user == null) 
+			{
 				logger.info("Null Content");
 				throw new RegistrationExcepton(Messages.ENTER_EMAIL);
 			}
@@ -95,19 +99,23 @@ public class UserServiceImplementation implements UserService {
 	 *         or Not. If token is valid, it sets the validation as 1.
 	 *
 	 */
-	public Response validateUser(String token) {
-
+	public Response validateUser(String token) 
+	{
 		String email = tokenutility.getUserToken(token); // get user id from user token.
-		if (email.isEmpty()) {
+		if (email.isEmpty()) 
+		{
 			throw new TokenException(Messages.INVALID_EMAIL);
 		}
 
 		User user = repository.findByEmail(email);
-		if (user != null) { // if userid is found validate should be true
+		if (user != null)
+		{ // if userid is found validate should be true
 			user.setValidate(true);
 			repository.save(user);
 			return new Response(Messages.OK, "email  ", Messages.EMAIL_VERIFIED);
-		} else {
+		}
+		else 
+		{
 			return new Response(Messages.BAD_REQUEST, "Email Not Verified", Messages.NOT_VERFIY_EMAIL);
 		}
 	}
@@ -116,21 +124,27 @@ public class UserServiceImplementation implements UserService {
 	 * @return User Login Method :- Login the Authenticated User
 	 *
 	 */
-	public Response loginUser(LoginDto logindto) {
+	public Response loginUser(LoginDto logindto) 
+	{
 		User user = repository.findByEmail(logindto.getEmail()); // find email present or not
 		System.out.println(user);
-		if (user == null) {
+		if (user == null)
+		{
 			logger.info("Null Content");
 			return new Response(Messages.BAD_REQUEST, "User Registrtion ", Messages.USER_NOT_EXISTING);
 		}
 		String token = tokenutility.createToken(user.getEmail());
 
-		if (!user.isValidate()) {
+		if (!user.isValidate()) 
+		{
 
 			new ValidateUserException(Messages.LINK_NOT_ACTIVE);
-		} else {
+		} 
+		else
+		{
 			if (user.getEmail().equals(logindto.getEmail())
-					&& passConfig.encoder().matches(logindto.getPassword(), user.getPassword())) { // encode the user
+					&& passConfig.encoder().matches(logindto.getPassword(), user.getPassword())) 
+			{ // encode the user
 				logger.info("username password Matched");
 				return new Response(Messages.OK, Messages.LOGIN_SUCCESSFUL, token); // password
 			}
@@ -143,16 +157,18 @@ public class UserServiceImplementation implements UserService {
 	 *         we can recover it by sending token to the email id.
 	 *
 	 */
-	public Response forgotPassword(ForgotPasswordDto forgetPasswordDto) {
+	public Response forgotPassword(ForgotPasswordDto forgetPasswordDto) 
+	{
 		User user = repository.findByEmail(forgetPasswordDto.getEmail()); // find by user email id
 
 		System.out.println(user);
-		if (user == null) { // if user email id it null response to user not register it
+		if (user == null)
+		{ 
 			logger.info("Null Content");
 			throw new ForgotPasswordException(Messages.USER_NOT_EXISTING);
-
-		} else {
-
+		} 
+		else
+		{
 			String token = tokenutility.createToken(user.getEmail());
 			System.out.println(token);
 			logger.info("Token Generated");
@@ -167,8 +183,8 @@ public class UserServiceImplementation implements UserService {
 	 * @return Update User Method :- Updating the user account by new Information
 	 *
 	 */
-	public String updateUserByEmail(User user, String email) {
-
+	public String updateUserByEmail(User user, String email) 
+	{
 		User updateUser = repository.findByEmail(email);
 		updateUser = user;
 		repository.save(updateUser);
@@ -180,18 +196,23 @@ public class UserServiceImplementation implements UserService {
 	 * @return Set Password Method :- Changing the Password
 	 *
 	 */
-	public Response setPassword(ResetPasswordDto setPasswordDto, String token) {
-		// System.out.println(token + "@@@@@@@@@@@@@@@@@@@@@@@@");
+	public Response setPassword(ResetPasswordDto setPasswordDto, String token) 
+	{
 		String useremail = tokenutility.getUserToken(token);
 
 		User updateUser = repository.findByEmail(useremail);
-		if (setPasswordDto.getPassword().equals(setPasswordDto.getConfirmpassword())) { // check password or cfmpassword
+		
+		if (setPasswordDto.getPassword().equals(setPasswordDto.getConfirmpassword())) 
+		{ // check password or cfmpassword
 			logger.info("Username Password Matched");
 			updateUser.setPassword(passwordEncoder.encode(setPasswordDto.getPassword())); // new password encode it
 
 			updateUserByEmail(updateUser, useremail);
+			
 			return new Response(Messages.OK, "Changed password", Messages.PASSWORD_CHANGED_SUCCESSFULLY);
-		} else {
+		} 
+		else
+		{
 			return new Response(Messages.BAD_REQUEST, null, Messages.PASSWORD_NOT_MATCHING);
 		}
 	}
@@ -200,9 +221,11 @@ public class UserServiceImplementation implements UserService {
 	 * @return Find User :- Particular user's data by the token
 	 *
 	 */
-	public Response findUser(String token) {
+	public Response findUser(String token) 
+	{
 		String email = tokenutility.getUserToken(token);
-		if (email.isEmpty()) {
+		if (email.isEmpty())
+		{
 			logger.info("Email Doesn't Exists");
 			throw new TokenException(Messages.INVALID_TOKEN);
 		}
@@ -213,7 +236,8 @@ public class UserServiceImplementation implements UserService {
 	 * @return Show All Users Method :- Showing the users's List
 	 *
 	 */
-	public List<User> showAllUsers(String token) {
+	public List<User> showAllUsers(String token) 
+	{
 		System.out.println("check");
 		logger.info("All USers");
 		return repository.findAll(); // show all user details in JPA

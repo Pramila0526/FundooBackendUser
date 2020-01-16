@@ -15,53 +15,53 @@ import com.bridgelabz.fundoouser.exception.ForgotPasswordException;
 import com.bridgelabz.fundoouser.response.Response;
 
 @ControllerAdvice
-public class Globalexception {
-	
+public class Globalexception 
+{
 	@ExceptionHandler(LoginException.class)
-	public ResponseEntity<Response> loginException(Exception e) {
-
+	public ResponseEntity<Response> loginException(Exception e) 
+	{
 		return new ResponseEntity<Response>(new Response(Messages.OK, e.getMessage(), "Please Try Again"), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@ExceptionHandler(RegistrationExcepton.class)
-	public ResponseEntity<Response> registrationExcepton(Exception e) {
-
+	public ResponseEntity<Response> registrationExcepton(Exception e) 
+	{
 		return new ResponseEntity<Response>(new Response(Messages.BAD_REQUEST, e.getMessage(), "Please Try Again"), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@ExceptionHandler(TokenException.class)
-	public ResponseEntity<Response> tokenException(Exception e) {
-
+	public ResponseEntity<Response> tokenException(Exception e) 
+	{
 		return new ResponseEntity<Response>(new Response(Messages.BAD_REQUEST, e.getMessage(), "Please Try Again"), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@ExceptionHandler(ValidationException.class)
-	public ResponseEntity<Response> validationException(Exception e) {
-
+	public ResponseEntity<Response> validationException(Exception e) 
+	{
 		return new ResponseEntity<Response>(new Response(Messages.BAD_REQUEST, e.getMessage(), "Please Try Again"), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@ExceptionHandler(ValidateUserException.class)
-	public ResponseEntity<Response> ValidateUserException(Exception e) {
-
+	public ResponseEntity<Response> ValidateUserException(Exception e) 
+	{
 		return new ResponseEntity<Response>(new Response(Messages.BAD_REQUEST, e.getMessage(), "Please Try Again"), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@ExceptionHandler(ForgotPasswordException.class)
-	public ResponseEntity<Response> ForgotPasswordException(Exception e) {
-
+	public ResponseEntity<Response> ForgotPasswordException(Exception e) 
+	{
 		return new ResponseEntity<Response>(new Response(Messages.BAD_REQUEST, e.getMessage(), "Please Try Again"), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Response> methodArgumentNotValidException(Exception e) {
-
+	public ResponseEntity<Response> methodArgumentNotValidException(Exception e) 
+	{
 		return new ResponseEntity<Response>(new Response(Messages.ENTER_EMAIL, e.getMessage(), "Try Again"), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@ExceptionHandler(MissingServletRequestParameterException.class)
-	public ResponseEntity<Response> missingServletRequestParameterException(Exception e) {
-
+	public ResponseEntity<Response> missingServletRequestParameterException(Exception e) 
+	{
 		return new ResponseEntity<Response>(new Response(Messages.ENTER_EMAIL, e.getMessage(), "Try Again"), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

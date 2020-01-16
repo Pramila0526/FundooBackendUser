@@ -17,7 +17,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Entity
 @Table(name = "userDetails")
-public class User implements Serializable {
+public class User implements Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,13 +38,15 @@ public class User implements Serializable {
 	@NotNull
 	private boolean validate;
 
-	public User() {
+	public User() 
+	{
 
 	}
 
 	// User Constructor
 	public User(int id, @NotNull String firstname, @NotNull String lastname, @NotNull String email,
-			@NotNull String password, @NotNull long phonenumber, @NotNull boolean validate) {
+			@NotNull String password, @NotNull long phonenumber, @NotNull boolean validate)
+	{
 		super();
 		this.id = id;
 		this.firstname = firstname;
@@ -54,27 +57,33 @@ public class User implements Serializable {
 		this.validate = validate;
 	}
 
-	public int getId() {
+	public int getId() 
+	{
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(int id) 
+	{
 		this.id = id;
 	}
 
-	public String getFirstname() {
+	public String getFirstname() 
+	{
 		return firstname;
 	}
 
-	public void setFirstname(String firstname) {
+	public void setFirstname(String firstname) 
+	{
 		this.firstname = firstname;
 	}
 
-	public String getLastname() {
+	public String getLastname() 
+	{
 		return lastname;
 	}
 
-	public void setLastname(String lastname) {
+	public void setLastname(String lastname)
+	{
 		this.lastname = lastname;
 	}
 
@@ -82,35 +91,43 @@ public class User implements Serializable {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(String email)
+	{
 		this.email = email;
 	}
 
-	public String getPassword() {
+	public String getPassword() 
+	{
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(String password) 
+	{
 		this.password = password;
 	}
 
-	public long getPhonenumber() {
+	public long getPhonenumber() 
+	{
 		return phonenumber;
 	}
 
-	public void setPhonenumber(long phonenumber) {
+	public void setPhonenumber(long phonenumber)
+	{
 		this.phonenumber = phonenumber;
 	}
 
-	public boolean isValidate() {
+	public boolean isValidate()
+	{
 		return validate;
 	}
 
-	public void setValidate(boolean validate) {
+	public void setValidate(boolean validate) 
+	{
 		this.validate = validate;
 	}
 
-	public String toString() {
+	public String toString() 
+	{
 		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
 				+ ", password=" + password + ", phonenumber=" + phonenumber + ", validate=" + validate + "]";
 	}

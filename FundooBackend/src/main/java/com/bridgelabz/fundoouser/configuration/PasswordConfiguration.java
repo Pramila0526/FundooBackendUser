@@ -11,7 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  *********************************************************************************************************/
 
 @Configuration
-public class PasswordConfiguration {
+public class PasswordConfiguration 
+{
 	/**
 	 * @return 	
 	 * Password encoder - Spring Security provides BCryptPasswordEncoder , and implementation of Spring's 
@@ -19,8 +20,8 @@ public class PasswordConfiguration {
 	 * 					the password. 			
 	 */
 	@Bean
-	public PasswordEncoder encoder() {
-		
+	public PasswordEncoder encoder() 
+	{		
 		return new BCryptPasswordEncoder();
 	}
 }

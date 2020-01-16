@@ -25,7 +25,15 @@ import com.bridgelabz.fundoouser.service.UserServiceImplementation;
  *
  *********************************************************************************************************/
 
-@RestController
+/**
+ * @return admin94
+ * RestController is the combination of @controller and @ResponseBody
+ * 
+ * 	The Job of the @Controller is to create a map of Model Object and find a view but
+ *  @RestController simply return the object 
+ *  and object data is directly written into http response as JSON or XML
+ */
+@RestController   
 public class UserController 
 {
       @Autowired

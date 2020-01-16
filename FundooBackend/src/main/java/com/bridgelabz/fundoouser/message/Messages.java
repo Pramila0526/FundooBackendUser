@@ -52,7 +52,4 @@ public class Messages {
 	public static final String BAD_REQUEST = "400";
 	
 	public static final String NOT_FOUND = "404";
-
-
-	
 }

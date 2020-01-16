@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageUtility
 {
-	public static SimpleMailMessage verifyUserMail(String email,String token,String link) {
-	
+	public static SimpleMailMessage verifyUserMail(String email,String token,String link)
+	{
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(email);    				 	// Sending Email
 		message.setSubject("Test");            	 

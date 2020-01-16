@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Configuration;
  *********************************************************************************************************/
 
 @Configuration
-public class Config {
+public class Config
+{
 	/**
 	 * @return
 	 * ModelMapper- ModelMapper consists of two separate processes: the matching process, 
@@ -18,8 +19,8 @@ public class Config {
 	 * 				source to destination object.
 	 **/
 	@Bean
-	public ModelMapper getMapper() {
-
+	public ModelMapper getMapper()
+	{
 		return new ModelMapper();
 	}
 }

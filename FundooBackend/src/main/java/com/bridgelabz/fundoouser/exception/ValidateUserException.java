@@ -6,8 +6,8 @@ package com.bridgelabz.fundoouser.exception;
  *
  *********************************************************************************************************/
 
-public class ValidateUserException  extends RuntimeException{
-
+public class ValidateUserException  extends RuntimeException
+{
 	private static final long serialVersionUID = 1L;
 
 	public ValidateUserException(String message)
